@@ -1,0 +1,378 @@
+.iconfont:before{
+	line-height: 1.5;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.none {
+	display: none !important;
+}
+/***fontsize**/
+.f36 {
+	font-size: 86.4upx !important;
+}
+
+.f28 {
+	font-size: 67.2upx !important;
+}
+
+.f22 {
+	font-size: 52.8upx !important;
+}
+
+.f20 {
+	font-size: 48upx !important;
+}
+
+.f18 {
+	font-size: 43.2upx !important;
+}
+
+.f16 {
+	font-size: 38.4upx !important;
+}
+
+.f14 {
+	font-size: 33.6upx !important;
+}
+
+.f12 {
+	font-size: 28.8upx !important;
+}
+
+.fmini {
+	font-size: 0.375rem !important;
+}
+
+.fw-600 {
+	font-weight: 600;
+}
+
+/***col1 2 3 内容字体差异 主标题 副标题 描述****/
+.cl1 {
+	color: #323232 !important;
+}
+
+.cl2 {
+	color: #646464 !important;
+}
+
+.cl3 {
+	color: #969696 !important;
+}
+
+.cl-f30 {
+	color: #f30 !important;
+}
+
+.cl-red {
+	color: #c12725 !important;
+}
+
+.cl-primary {
+	color: #007bff !important;
+}
+
+.cl-secondary {
+	color: #6c757d !important;
+}
+
+.cl-success {
+	color: #28a745 !important;
+}
+
+.cl-danger {
+	color: #dc3545 !important
+}
+
+.cl-warning {
+	color: #ffc107 !important
+}
+
+.cl-info {
+	color: #17a2b8 !important;
+}
+
+.cl-light {
+	color: #f8f9fa !important;
+}
+
+.cl-dark {
+	color: #343a40 !important;
+}
+
+.cl-muted {
+	color: #6c757d !important;
+}
+
+.cl-white {
+	color: #fff !important;
+}
+
+.cl-money {
+	color: #FF6600 !important;
+}
+
+.cl-num {
+	color: #f70 !important;
+}
+.cl-light-orange{
+	color: #ffa03c;
+}
+/***background-color***/
+.bg-ef {
+	background-color: #efefef !important;
+}
+
+.bg-fff {
+	background-color: #fff !important;
+}
+
+.bg-f30 {
+	background-color: #f30 !important;
+}
+
+.bg-primary {
+	background-color: #007bff !important;
+}
+
+.bg-secondary {
+	background-color: #6c757d !important;
+}
+
+.bg-success {
+	background-color: #28a745 !important;
+}
+
+.bg-danger {
+	background-color: #dc3545 !important;
+}
+
+.bg-warning {
+	background-color: #ffc107 !important;
+}
+
+.bg-info {
+	background-color: #17a2b8 !important;
+}
+
+.bg-light {
+	background-color: #f8f9fa !important;
+}
+
+.bg-dark {
+	background-color: #343a40 !important;
+}
+
+.bg-white {
+	background-color: #fff;
+}
+
+.bg-transparent {
+	background-color: transparent !important;
+}
+
+.bg-royal {
+	background-color: #8a6de9 !important;
+}
+
+.bg-disabled {
+	background-color: #FBFBFB !important;
+}
+
+/****固定颜色****/
+
+/***padding****/
+.pd-1 {
+	padding: 2upx !important;
+}
+
+.pd-5 {
+	padding: 12upx !important;
+}
+
+.pdl-5 {
+	padding-left: 12upx !important;
+}
+
+.pdr-5 {
+	padding-right: 12upx !important;
+}
+
+.pdt-5 {
+	padding-top: 12upx !important;
+}
+
+.pdb-5 {
+	padding-bottom: 12upx !important;
+}
+
+.pd-10 {
+	padding: 24upx !important;
+}
+
+.pdl-10 {
+	padding-left: 24upx !important;
+}
+
+.pdr-10 {
+	padding-right: 24upx !important;
+}
+
+.pdt-10 {
+	padding-top: 24upx !important;
+}
+
+.pdb-10 {
+	padding-bottom: 24upx !important;
+}
+
+.pd-20 {
+	padding: 38upx;
+}
+
+.pdt-30 {
+	padding-top: 72upx !important;
+}
+
+.pdb-30 {
+	padding-bottom: 72upx !important;
+}
+
+.pdt-0 {
+	padding-top: 0upx !important;
+}
+
+/***margin****/
+.mgr-0 {
+	margin-right: 0upx !important;
+}
+
+.mg-5 {
+	margin: 12upx !important;
+}
+
+.mgb-5 {
+	margin-bottom: 12upx !important;
+}
+
+.mgt-5 {
+	margin-top: 12upx !important;
+}
+
+.mgl-5 {
+	margin-left: 12upx !important;
+}
+
+.mgr-5 {
+	margin-right: 12upx !important;
+}
+
+.mg-10 {
+	margin: 24upx !important;
+}
+
+.mgb-10 {
+	margin-bottom: 24upx !important;
+}
+
+.mgt-10 {
+	margin-top: 24upx !important;
+}
+
+.mgl-10 {
+	margin-left: 24upx !important;
+}
+
+.mgr-10 {
+	margin-right: 24upx !important;
+}
+
+.mgr-20 {
+	margin-right: 48upx !important;
+}
+
+.mgb-20 {
+	margin-bottom: 48upx !important;
+}
+
+.mgl-20 {
+	margin-left: 48upx !important;
+}
+
+.mgt-20 {
+	margin-top: 48upx !important;
+}
+
+.mgr-20 {
+	margin-right: 48upx !important;
+}
+
+.mgb-0 {
+	margin-bottom: 0upx !important;
+}
+
+.mgt-40 {
+	margin-top: 96upx !important;
+}
+
+/* btn按钮大小 */
+.btn-small {
+	padding: 19.2upx 28.8upx;
+	font-size: 33.6upx;
+	background-color: #007AFF;
+	color: #fff;
+	display: inline-flex;
+	cursor: pointer;
+	line-height: 1;
+	border-radius: 12upx;
+	text-align: center;
+}
+
+.btn-mini {
+	padding: 9.6upx 4.8upx;
+	font-size: 28.8upx;
+	background-color: #007AFF;
+	color: #fff;
+	display: inline-flex;
+	cursor: pointer;
+	line-height: 1.5;
+	text-align: center;
+}
+
+/* 按钮圆角 */
+.btnr-5 {
+	border-radius: 10upx;
+}
+
+.btnr-10 {
+	border-radius: 30upx;
+}
+
+.btnr-22 {
+	border-radius: 40upx;
+}
+
+.btnr-40 {
+	border-radius: 74upx;
+}
+
+/* 按钮颜色 */
+.btn-orange {
+	background-color: #ff5800 !important;
+}
+
+/* 文字位置 */
+.text-right {
+	text-align: right !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.text-left {
+	text-align: left !important;
+}

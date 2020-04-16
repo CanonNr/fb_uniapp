@@ -1,0 +1,392 @@
+/* 样式初始化 */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #efeff4;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+p,
+ol,
+ul,
+li {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+[gourl] {
+	cursor: pointer;
+}
+
+text {
+	display: inline-block;
+	line-height: 1.5;
+}
+
+navigator {
+	display: flex;
+	color: #323232;
+	text-decoration: none;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+view,
+div {
+	color: #323232;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	font-size: 33.6upx;
+}
+
+/*底部菜单栏 */
+uni-page-head .uni-page-head .uni-page-head-ft {
+	position: absolute;
+	right: 19upx;
+	top: 19upx;
+	min-width: 0;
+	-webkit-user-select: auto;
+	user-select: auto;
+	display: initial;
+}
+
+uni-input div {
+	width: 100%;
+}
+
+.input-flex-btn {
+	z-index: 2;
+}
+
+.header,
+.header-row {
+	display: none;
+}
+
+uni-page-head .uni-page-head-hd {
+	flex-direction: row;
+}
+
+.uni-tabbar,
+.uni-picker-view-wrapper {
+	flex-direction: row !important;
+}
+
+.uni-swiper-dots {
+	flex-direction: row;
+}
+
+.fixedAdd {
+	position: fixed;
+	bottom: 200upx;
+	right: 7upx;
+	width: 92upx;
+	height: 92upx;
+	text-align: center;
+	box-sizing: border-box;
+	background-color: rgba(240, 85, 75, .82);
+	color: #fff;
+	font-family: iconfont;
+	font-size: 32upx;
+	padding-top: 11upx;
+	border-radius: 22upx;
+
+}
+
+.fixedAdd:before {
+	content: "\e7e8";
+	display: block;
+	font-size: 32upx;
+}
+
+.uni-form-item {
+	margin-bottom: 1.4em;
+}
+
+.uni-input {
+	height: 2.5em;
+	border-radius: 10upx;
+}
+
+.uni-input-input {
+	padding: 0 20upx;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+
+.uni-input-placeholder {
+	left: 20upx;
+}
+
+uni-swiper {
+	height: 100vh;
+}
+
+.content {
+	padding: 40upx;
+}
+
+.btn-row-submit {
+	margin: 0 auto;
+}
+
+/* 登录注册 */
+.verify {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.verify .verify-input {
+	flex: 2;
+}
+
+.verify .verify-code {
+	flex: 1.5;
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.verify .verify-code uni-button {
+	margin-right: 0;
+}
+
+.is-agree {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 20upx;
+}
+
+uni-radio .uni-radio-wrapper {
+	vertical-align: sub;
+}
+
+/* 列表样式 */
+.list {
+	flex-direction: column;
+	margin-top: 20upx;
+	width: 750upx;
+}
+
+.list-group {
+	background-color: #FFFFFF;
+}
+
+.list-group:first-child {
+	margin-bottom: 20upx;
+}
+
+.list-item {
+	display: flex;
+	flex-direction: row;
+	height: 90upx;
+	width: 750upx;
+	padding: 0upx 20upx;
+}
+
+.list-icon.iconfont {
+	width: 40upx;
+	height: 90upx;
+	line-height: 90upx;
+	font-size: 47upx;
+	color: #2F85FC;
+	text-align: center;
+	font-family: texticons;
+	margin-right: 20upx;
+}
+
+.list-text {
+	height: 90upx;
+	line-height: 90upx;
+	font-size: 34upx;
+	color: #555;
+	flex: 1;
+}
+
+.list-text2 {
+	height: 90upx;
+	line-height: 90upx;
+	font-size: 34upx;
+	color: #555;
+}
+
+.border-bottom {
+	border-bottom-width: 1upx;
+	border-color: #c8c7cc;
+	border-bottom-style: solid;
+}
+
+.navigat-arrow.iconfont {
+	height: 90upx;
+	width: 40upx;
+	line-height: 90upx;
+	font-size: 47upx;
+	color: #555;
+	text-align: right;
+	font-family: texticons;
+}
+
+.group-input {
+	margin: 60upx 0;
+}
+
+.self-input {
+	padding: 10upx;
+	margin-bottom: 10upx;
+}
+
+.select-input {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10upx;
+	margin-bottom: 10upx;
+}
+
+.select-input-pick {
+	display: flex;
+	flex-direction: row;
+}
+
+.select-input-pick uni-picker uni-view {
+	color: #888;
+}
+
+.solid {
+	width: 100%;
+	padding: 2upx;
+	font-size: 18upx;
+}
+
+.yellow-solid {
+	background-color: #e6d95a;
+	color: #989040;
+}
+
+/* 步骤条 */
+.steps {
+	position: relative;
+	margin-bottom: 60upx;
+	counter-reset: step;
+	/*创建步骤数字计数器*/
+	display: flex;
+	flex-direction: row;
+}
+
+/*步骤描述*/
+.steps view {
+	list-style-type: none;
+	font-size: 28upx;
+	text-align: center;
+	width: 25%;
+	position: relative;
+	float: left;
+}
+
+/*步骤数字*/
+.steps view:before {
+	display: block;
+	content: counter(step);
+	/*设定计数器内容*/
+	counter-increment: step;
+	/*计数器值递增*/
+	width: 60upx;
+	height: 60upx;
+	background-color: #019875;
+	line-height: 60upx;
+	border-radius: 50%;
+	font-size: 28upx;
+	color: #fff;
+	text-align: center;
+	font-weight: 700;
+	margin: 0 auto 8px auto;
+}
+
+/*连接线*/
+.steps view~view:after {
+	content: '';
+	width: 60%;
+	height: 4upx;
+	background-color: #019875;
+	position: absolute;
+	left: -30%;
+	top: 30upx;
+	z-index: 1;
+	/*放置在数字后面*/
+}
+
+/*将当前/完成步骤之前的数字及连接线变绿*/
+.steps view.steps-active:before,
+.steps view.steps-active:after {
+	background-color: #019875;
+}
+
+/*将当前/完成步骤之后的数字及连接线变灰*/
+.steps view.steps-active~view:before,
+.steps view.steps-active~view:after {
+	background-color: #777;
+}
+
+/* 首页滑块 */
+.ul {
+	padding: 10upx 4upx;
+	margin: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.li {
+	text-align: center;
+	position: relative;
+	font-size: 28.8upx;
+	padding: 0 20upx;
+}
+/* .li:not(:first-child):after{
+	position: absolute;    
+   top:10upx;    
+   height: calc(100% - 20upx);    
+   left:-30%;    
+   content: '';    
+   width:0;    
+   border-left: solid  #666 2upx;
+} */
+.tab-bg {
+	margin: 8upx;
+	display: inline-block;
+	height: 36upx;
+	position: absolute;
+	left: 0;
+	top: 0;
+	transition: left .4s;
+	-webkit-transition: left .4s;
+	-moz-transition: left .4s;
+}
+
+.li:hover {
+	cursor: pointer;
+}
+
+.eightrow li {
+	width: 100upx;
+	color: white;
+}
+
+.eightrow .dayActive {
+	color: #fff;
+	background: #FF7700;
+}
+
+.eightrow {
+	width: 100%;
+	background: #efefef;
+}
