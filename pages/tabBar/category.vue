@@ -5,7 +5,7 @@
         <view class="header" :style="{position:headerPosition}">
 			<view class="addr"><view class="icon location"></view>{{city}}</view>
 			<view class="input-box">
-				<input placeholder="默认关键字" v-model="searchname" placeholder-style="color:#c0c0c0;" />
+				<input placeholder="默认关键字"  placeholder-style="color:#c0c0c0;" />
 				<view class="icon search" @tap="toSearch()"></view>
 			</view>
 			<view class="icon-btn">
@@ -17,7 +17,7 @@
 		<view class="category-list">
 			<!-- 左侧分类导航 -->
 			<scroll-view  scroll-y="true" class="left" >
-                <view class="row" v-for="(category,index) in categoryList" :key="category.id" :class="[index==showCategoryIndex?'on':'']" @tap="showCategory(index)">
+                <view class="row" v-for="(category,index) in categoryList" :key="category.id" :class="[index==showCategoryIndex?'on':'']" @tap="showCategory(category.id,index)">
 					<view class="text">
 						<view class="block"></view>
 						{{category.title}}
@@ -45,6 +45,9 @@
 <script>
 	//高德SDK
 	import amap from '@/common/SDK/amap-wx.js';
+	import {
+			request
+		} from '../../libs/request';
 	export default {
 		data() {
 			return {
@@ -53,32 +56,10 @@
 				city:"北京",
 				//分类列表
 				categoryList:[
-					{id:1,title:'主食',banner:'../../static/img/category/banner.jpg',list:[
-						{name:'米饭',		id:'11',img:'1.jpg'},
-						{name:'馒头',		id:'12',img:'2.jpg'},
-						{name:'普通烧烤',	id:'13',img:'3.jpg'},
-						{name:'洗衣机',		id:'888',img:'4.jpg'},
-						{name:'风扇',		id:'15',img:'5.jpg'},
-					
-					]},
-					{id:2,title:'酒水',banner:'../../static/img/category/banner.jpg',list:[
-						{name:'浙江菜',id:'21',	img:'1.jpg'},
-						{name:'上海菜',id:'22',	img:'2.jpg'},
-						{name:'川菜',	id:'23',img:'3.jpg'},
-						{name:'鲁菜',	id:'24',img:'4.jpg'},
-						{name:'广东菜',	id:'25',img:'5.jpg'},
-						{name:'东北菜',	id:'26',img:'6.jpg'}
-					]},
-					{id:3,title:'盖浇饭',banner:'../../static/img/category/banner.jpg',list:[
-						{name:'A', id:'31',	img:'2.jpg'},
-						{name:'B',	id:'32',img:'2.jpg'},
-						
-					]},
-					{id:4,title:'炒菜',banner:'../../static/img/category/banner.jpg',list:[
-						{name:'饮用水',id:'41',	img:'1.jpg'},
-						{name:'果汁',	id:'42',img:'2.jpg'},
-					
-					]}
+					{id:1,title:'主食',banner:'../../static/img/category/banner.jpg',list:[]},
+					{id:2,title:'酒水',banner:'../../static/img/category/banner.jpg',list:[]},
+					{id:3,title:'盖浇饭',banner:'../../static/img/category/banner.jpg',list:[]},
+					{id:4,title:'炒菜',banner:'../../static/img/category/banner.jpg',list:[]}
 				]
 			}
 		},
@@ -91,16 +72,6 @@
 			}
 		},
 		onLoad() {
-			// this.amapPlugin = new amap.AMapWX({  
-			// 	//高德地图KEY，随时失效，请务必替换为自己的KEY，参考：http://ask.dcloud.net.cn/article/35070
-			// 	key: '7c235a9ac4e25e482614c6b8eac6fd8e'  
-			// });
-			// //定位地址
-			// this.amapPlugin.getRegeo({  
-			// 	success: (data) => {
-			// 		this.city = data[0].regeocodeData.addressComponent.city.replace(/市/g,'');//把"市"去掉
-			// 	}  
-			// }); 
 		},
 		methods: {
 			//消息列表
@@ -110,24 +81,31 @@
 				})
 			},
 			//分类切换显示
-			showCategory(index){
+			showCategory(id,index){
+				var that = this
 				this.showCategoryIndex = index;
+				request.get('/v1/goods/get/list/'+id).then(function(res) {
+					that.categoryList[index]['list']=res.data 
+				}, function(error) {
+					console.log('error')
+				})
+				console.log(that.goodsList)
 			},
 			toCategory(e){
-				console.log(e)
+				console.log(e+"***")
 				//uni.showToast({title: e.name,icon:"none"});
 				uni.navigateTo({
-					url: '../goods/goods-list?cid='+e.id+'&name='+e.name
+					url: '../goods/goods?id='+e.id
 				});
 			},
 			//搜索跳转
 			toSearch(e){
 				
-				var that=this
-				console.log(this.searchname)
-				uni.navigateTo({
-					url: '../goods/goods-list2?searchname='+that.searchname
-				});
+				// var that=this
+				// console.log(this.searchname)
+				// uni.navigateTo({
+				// 	url: '../goods/goods-list2?searchname='+that.searchname
+				// });
 			}
 		}
 	}

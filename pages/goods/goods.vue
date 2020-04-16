@@ -246,19 +246,31 @@ export default {
 		};
 	},
 	onLoad(option) {
-		let id = this.$route.params.__id__
+		let that = this;
+		let id = this.$route.query.id
 		let user_id = localStorage.getItem('user_id')
-		//var contactmsg = 
 		request.get('/v1/goods/getone/'+id).then(function(res) {
-			 console.log(res)
-			 that.goodsData.goods_name=res.data.goods_name
-			 that.goodsData.id=res.data.id,
-			  that.goodsData.price=res.data.price,
-			  that.goodsData.img=res.data.goods_cover,
-			 // that.swiperList.img=res.data.goods_cover,
-			 
-			console.log(that.goodsData)
-			 
+			that.goodsData.goods_name=res.data.goods_name;
+			that.goodsData.id=res.data.id
+			that.goodsData.price=res.data.price
+			that.goodsData.img=res.data.goods_cover
+			that.swiperList.img=res.data.goods_cover 
+		}, function(error) {
+			console.log('error')
+		})
+		
+		// 收藏
+		
+		request.get('/v1/user/get/love',{
+			'goodsid':id,
+			'userid':user_id,
+		}).then(function(res) {
+			console.log(res.data.status)
+			if(res.data.status === "true"){
+				that.isKeep = true
+			}else{
+				that.isKeep = false
+			}	
 		}, function(error) {
 			console.log('error')
 		})
@@ -318,23 +330,23 @@ export default {
 		},
 		//收藏
 		keep(){
+			let isKeep = this.isKeep?false:true;
+			this.isKeep = isKeep
 			var that=this
-				const userid=getStore('userid');
-			request.post('/v1/user/addlove',
-				{'goodsid':this.goodsData.id,
+			const userid=localStorage.getItem('user_id')
+			request.post('/v1/user/addlove',{
+				'goodsid':this.goodsData.id,
 				'userid':userid,
-					'goodsname':this.goodsData.goods_name,
-						'goodscover':this.goodsData.img,
-					'price':this.goodsData.price,
-				}).then(function(res) {
-				console.log(res)
-					uni.showToast({title: "已收藏"});
+				'status':isKeep
+			}).then(function(res) {
+				
+				uni.showToast({title: "已收藏"});
+
+			}, function(error) {
+				console.log('error')
+			})
+
 			
-				}, function(error) {
-					console.log('error')
-				})
-			
-			this.isKeep = this.isKeep?false:true;
 		},
 		// 加入购物车
 		joinCart(){

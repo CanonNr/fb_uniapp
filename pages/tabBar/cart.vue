@@ -131,10 +131,10 @@ import {
 			request.get('/v1/order/getCartInfo/'+userid).then(function(res) {
 				 console.log(res)
 				that.goodsList=res.data
-				 // that.goodsData.id=res.data.id,
-				 //  that.goodsData.price=res.data.price,
-				 //  that.goodsData.img=res.data.goods_cover,
-				 // that.swiperList.img=res.data.goods_cover,
+				 that.goodsData.id=res.data.id,
+				  that.goodsData.price=res.data.price,
+				  that.goodsData.img=res.data.goods_cover,
+				 that.swiperList.img=res.data.goods_cover,
 				 
 				console.log(that.goodsData)
 				 

@@ -1,4 +1,5 @@
 <script>
+	// 设置一个假的user_id
 	localStorage.setItem('user_id', 135)
 	export default {
 		onLaunch: function () {
