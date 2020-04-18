@@ -207,31 +207,36 @@
 				uni.showLoading({
 					title:'正在提交订单...'
 				})
-				setTimeout(()=>{
-					
+				let order_name = '';
+				for(let i=0;i<paymentOrder.length;i++){
+					order_name = order_name+paymentOrder[i]['goods']['name'] +'  '
+				}
+				console.log(order_name)
+				setTimeout(()=>{	
+					console.log(goodsid)
+					var b = goodsid.join("-");
+					const userid=getStore('user_id');
+					var that=this
+					request.get('/api/order/add',
+						{
+							'goods_id':b,
+							'freight':this.freight,
+							'total':this.sumPrice,
+							'user_id':userid,
+							'name':this.recinfo.name,
+							'tel':this.recinfo.tel,
+							'address':this.recinfo.address,
+							'order_name':order_name
+						},).then(function(res) {
+							console.log(res)
+							uni.hideLoading();
+							that.orderid=res.data.order_id
+							// uni.hideLoading();
+							that.tz();
+						}, function(error) {
+							console.log('error')
+						})
 				
-						console.log(goodsid)
-						var b = goodsid.join("-");
-						
-					    var okaddress="姓名"+this.recinfo.name+"手机号:"+this.recinfo.tel+"配送地址:"+this.recinfo.label+this.recinfo.address;
-							const userid=getStore('userid');
-							var that=this
-								request.post('/v1/order/addorder',
-									{'goodsid':b,
-									'address':okaddress,
-									'yun':this.freight,
-									'total':this.sumPrice,
-									'userid':userid,
-									}).then(function(res) {
-									console.log(res)
-									uni.hideLoading();
-								   that.orderid=res.data.orderid
-										// uni.hideLoading();
-						that.tz();
-									}, function(error) {
-										console.log('error')
-									})
-						
 					uni.hideLoading();
 					
 					// uni.setStorage({
