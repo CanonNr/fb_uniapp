@@ -59,7 +59,7 @@
 					{id:1,title:'主食',banner:'../../static/img/category/banner.jpg',list:[]},
 					{id:2,title:'酒水',banner:'../../static/img/category/banner.jpg',list:[]},
 					{id:3,title:'盖浇饭',banner:'../../static/img/category/banner.jpg',list:[]},
-					{id:4,title:'炒菜',banner:'../../static/img/category/banner.jpg',list:[]}
+					{id:4,title:'菜',banner:'../../static/img/category/banner.jpg',list:[]}
 				]
 			}
 		},

@@ -7,7 +7,7 @@
  * verifyType:认证类型,用来返回认证项
  * urltoken 渠道token
  */
-let baseUrl = 'http://127.0.0.1:8888/index.php';
+let baseUrl = 'http://127.0.0.1:888';
 
 /* 
 let this_login_type = 2;
@@ -17,5 +17,4 @@ let urltoken='2a76d19d50298179ada96f1a0eede04a';
 
 export {
 	baseUrl,
-
 }
