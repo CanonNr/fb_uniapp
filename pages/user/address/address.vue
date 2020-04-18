@@ -12,7 +12,7 @@
 						<view class="name-tel">
 							<view class="name">{{row.name}}</view>
 							<view class="tel">{{row.tel}}</view>
-							<view class="default" v-if="row.isDefault">
+							<view class="default" v-if="row.is_default=='true'">
 								默认
 							</view>
 						</view>
@@ -20,11 +20,7 @@
 							{{row.label}} {{row.address}}
 						</view>
 					</view>
-					<view class="right">
-						<view class="icon bianji" @tap.stop="edit(row)">
-							
-						</view>
-					</view>
+					
 				</view>
 			</view>
 		</view>
@@ -96,10 +92,10 @@
 			if(e.type=='select'){
 				this.isSelect = true;
 			}
-			const userid=getStore('userid');
+			const userid=getStore('user_id');
 			var that = this
 			//var contactmsg = 
-			request.get('/v1/address/getlist/'+userid).then(function(res) {
+			request.get('/api/address/get/'+userid).then(function(res) {
 				 console.log(res)
 				 that.addressList=res.data
 				
