@@ -95,7 +95,7 @@
 					if(res.code = 200){
 
 						uni.showToast({title: '登录成功',icon:"success"});
-						
+						setStore('user_id', res.data.id);
 						setStore('username', res.data.username);
 						setStore('password', res.data.password);
 						setStore('token', res.data.token);

@@ -10,10 +10,13 @@ const send = (url, data = {}, method = 'POST', showLoading = true, base_url = ''
 	uni.showLoading({
 		title: '加载中'
 	})
-	const userid=getStore('userid');
-	if(userid){
-		data.userid=userid;
+	const token=getStore('token');
+
+	
+	if(token){
+		data.token=token;
 	}
+	
 	return new Promise((resolve) => {
 		uni.request({
 			method: method,

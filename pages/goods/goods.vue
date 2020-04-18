@@ -250,7 +250,7 @@ export default {
 	onLoad(option) {
 		let that = this;
 		let id = this.$route.query.id
-		let user_id = localStorage.getItem('user_id')
+		let user_id = getStore('user_id');
 		request.get('/api/goods/get/'+id).then(function(res) {
 			that.goodsData.name=res.data.name;
 			that.goodsData.id=res.data.id
@@ -266,19 +266,19 @@ export default {
 		
 		// 收藏
 		
-		// request.get('/v1/user/get/love',{
-		// 	'goodsid':id,
-		// 	'userid':user_id,
-		// }).then(function(res) {
-		// 	console.log(res.data.status)
-		// 	if(res.data.status === "true"){
-		// 		that.isKeep = true
-		// 	}else{
-		// 		that.isKeep = false
-		// 	}	
-		// }, function(error) {
-		// 	console.log('error')
-		// })
+		if(getStore('token').length >0){
+			request.get('/api/goods/collect/'+user_id+'/'+id).then(function(res) {
+				console.log(res.data.status)
+				if(res.data.status === "true"){
+					that.isKeep = true
+				}else{
+					that.isKeep = false
+				}	
+			}, function(error) {
+				console.log('error')
+			})
+		}
+		
 		
 	},
 	onShow() {
@@ -335,23 +335,23 @@ export default {
 		},
 		//收藏
 		keep(){
-			let isKeep = this.isKeep?false:true;
-			this.isKeep = isKeep
-			var that=this
-			const userid=localStorage.getItem('user_id')
-			request.post('/v1/user/addlove',{
-				'goodsid':this.goodsData.id,
-				'userid':userid,
-				'status':isKeep
-			}).then(function(res) {
+			if(getStore('token').length >0){
+				let isKeep = this.isKeep?false:true;
+				this.isKeep = isKeep
+				var that=this
+				const userid=getStore('user_id');
+				request.get('/api/goods/collect/action/'+userid+'/'+this.goodsData.id+'/'+isKeep,{
+					'goodsid':this.goodsData.id,
+					'userid':userid,
+					'status':isKeep
+				}).then(function(res) {
+					
+					uni.showToast({title: "操作成功"});
 				
-				uni.showToast({title: "已收藏"});
-
-			}, function(error) {
-				console.log('error')
-			})
-
-			
+				}, function(error) {
+					console.log('error')
+				})
+			}
 		},
 		// 加入购物车
 		joinCart(){
@@ -359,41 +359,22 @@ export default {
 			console.log(this.goodsData)
 			
 			console.log(this.selectSpec)
-			const userid=getStore('userid');
-			
-			
-			
-			
-			
-			
-			
-			
-			
-				request.post('/v1/order/addcart',
-					{'goodsid':this.goodsData.id,
-					'number':this.goodsData.number,
-					'price':this.goodsData.price,
-					'goodsname':this.goodsData.goods_name,
-					'userid':userid,
-					'goodscover':this.goodsData.img,
-					'goods_description':this.goodsData.goods_name,
-					'goodsspec':this.selectSpec,
+				const userid=getStore('user_id');
+				request.get('/api/goods/cart/add/',{
+						'goodsid':this.goodsData.id,
+						'number':this.goodsData.number,
+						'price':this.goodsData.price,
+						'goodsname':this.goodsData.goods_name,
+						'userid':userid,
+						'goodscover':this.goodsData.img,
+						'goods_description':this.goodsData.goods_name,
+						'goodsspec':this.selectSpec,
 					}).then(function(res) {
 					console.log(res)
-						uni.showToast({title: "已加入购物车"});
-					// uni.hideLoading()
-					// 				uni.showToast({title: '注册成功',icon:"success"});
-									// setTimeout(function(){
-									// 	uni.navigateBack();
-									// },1000)
-					
-						
-				
-						// uni.hideLoading();
-				// 		uni.navigateBack();
-					}, function(error) {
-						console.log('error')
-					})
+					uni.showToast({title: "已加入购物车"});
+				}, function(error) {
+					console.log('error')
+				})
 				// return this.showSpec(()=>{
 				// 	uni.showToast({title: "已加入购物车"});
 				// });
