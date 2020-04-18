@@ -5,7 +5,7 @@
         <view class="header" :style="{position:headerPosition}">
 			<view class="addr"><view class="icon location"></view>{{city}}</view>
 			<view class="input-box">
-				<input placeholder="默认关键字"  v-model="searchname" placeholder-style="color:#c0c0c0;" />
+				<input placeholder="请输入要搜索的商品名"  v-model="searchname" placeholder-style="color:#c0c0c0;" />
 				<view class="icon search" @tap="toSearch()"></view>
 			</view>
 			<view class="icon-btn">
@@ -59,7 +59,7 @@
 				showCategoryIndex:0,
 				headerPosition:"fixed",
 				city:"北京",
-				searchname:'回锅肉',
+				searchname:'',
 				//分类列表
 				categoryList:[
 					{id:1,title:'主食',banner:'../../static/img/category/banner.jpg',list:[]},

@@ -25,14 +25,14 @@
 					<!-- 商品信息 -->
 					<view class="goods-info" @tap="toGoods(row)">
 						<view class="img">
-							<image :src="row.goodscover"></image>
+							<image :src="row.goods.cover"></image>
 						</view>
 						<view class="info">
-							<view class="title">{{row.goodsname}}</view>
+							<view class="title">{{row.goods.name}}</view>
 							<!-- <view class="spec">{{row.goodsspec}}</view> -->
 							<view class="price-number">
-								<view class="price">￥{{row.price}}</view>
-								<view class="number">
+								<view class="price">￥{{row.goods.price}}</view>
+								<!-- <view class="number">
 									<view class="sub" @tap.stop="sub(index)">
 										<view class="icon jian"></view>
 									</view>
@@ -42,7 +42,7 @@
 									<view class="add"  @tap.stop="add(index)">
 										<view class="icon jia"></view>
 									</view>
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</view>
@@ -74,6 +74,11 @@
 import {
 		request
 	} from '../../libs/request';
+	
+	import {
+		baseUrl
+	} from 'config/env';
+	
 	export default {
 		data() {
 			return {
@@ -123,21 +128,16 @@ import {
 			
 		},
 		onShow(){
-			const userid=getStore('userid');
-			
-			//option.cid=1;
+			const userid=getStore('user_id');
 			var that = this
-			//var contactmsg = 
-			request.get('/v1/order/getCartInfo/'+userid).then(function(res) {
-				 console.log(res)
-				that.goodsList=res.data
-				 that.goodsData.id=res.data.id,
-				  that.goodsData.price=res.data.price,
-				  that.goodsData.img=res.data.goods_cover,
-				 that.swiperList.img=res.data.goods_cover,
-				 
-				console.log(that.goodsData)
-				 
+			
+			request.get('/api/cart/list/'+userid).then(function(res) {
+				
+				let data = res.data;
+				for(let i=0;i<data.length;i++){
+					data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover'];
+				}
+				that.goodsList=data				 
 			}, function(error) {
 				console.log('error')
 			})
@@ -255,6 +255,8 @@ import {
 			},
 			//删除商品
 			deleteGoods(id){
+				let userid = getStore('user_id');				request.get('/api/cart/delete/'+userid+'/'+id).then(function(res) {					uni.navigateTo({						url:'../tabBar/cart'					})				}, function(error) {					console.log('error')				})
+				
 				let len = this.goodsList.length;
 				for(let i=0;i<len;i++){
 					if(id==this.goodsList[i].id){

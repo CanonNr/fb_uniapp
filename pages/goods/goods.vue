@@ -356,28 +356,18 @@ export default {
 		// 加入购物车
 		joinCart(){
 			
-			console.log(this.goodsData)
+			let id = this.$route.query.id
+			const userid=getStore('user_id');
 			
-			console.log(this.selectSpec)
-				const userid=getStore('user_id');
-				request.get('/api/goods/cart/add/',{
-						'goodsid':this.goodsData.id,
-						'number':this.goodsData.number,
-						'price':this.goodsData.price,
-						'goodsname':this.goodsData.goods_name,
-						'userid':userid,
-						'goodscover':this.goodsData.img,
-						'goods_description':this.goodsData.goods_name,
-						'goodsspec':this.selectSpec,
-					}).then(function(res) {
-					console.log(res)
-					uni.showToast({title: "已加入购物车"});
-				}, function(error) {
-					console.log('error')
-				})
-				// return this.showSpec(()=>{
-				// 	uni.showToast({title: "已加入购物车"});
-				// });
+			request.get('/api/goods/cart/add/'+userid+'/'+id,).then(function(res) {
+				console.log(res)
+				uni.showToast({title: "已加入购物车"});
+			}, function(error) {
+				console.log('error')
+			})
+			// return this.showSpec(()=>{
+			// 	uni.showToast({title: "已加入购物车"});
+			// });
 			
 		
 		},
