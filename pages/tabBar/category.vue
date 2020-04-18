@@ -33,7 +33,7 @@
 					</view>
 					<view class="list">
 						<view class="box" v-for="(box,i) in category.list" :key="i" @tap="toCategory(box)">
-							<image :src="'../../static/img/category/list/'+box.img"></image>
+							<image :src="box.cover"></image>
 							<view class="text">{{box.name}}</view>
 						</view>
 					</view>
@@ -48,6 +48,11 @@
 	import {
 			request
 		} from '../../libs/request';
+		
+	import {
+		baseUrl
+	} from 'config/env';
+	
 	export default {
 		data() {
 			return {
@@ -72,6 +77,18 @@
 			}
 		},
 		onLoad() {
+			var that = this
+			
+			request.get('/api/goods/list/1').then(function(res) {
+				// 
+				let data = res.data;
+				for(let i=0;i<data.length;i++){
+					data[i]['cover'] = baseUrl+data[i]['cover'];
+				}
+				that.categoryList[0]['list']=data 
+			}, function(error) {
+				console.log('error')
+			})
 		},
 		methods: {
 			//消息列表
@@ -84,16 +101,19 @@
 			showCategory(id,index){
 				var that = this
 				this.showCategoryIndex = index;
-				request.get('/v1/goods/get/list/'+id).then(function(res) {
-					that.categoryList[index]['list']=res.data 
+				request.get('/api/goods/list/'+id).then(function(res) {
+					// 
+					let data = res.data;
+					for(let i=0;i<data.length;i++){
+						data[i]['cover'] = baseUrl+data[i]['cover'];
+					}
+					that.categoryList[index]['list']=data 
 				}, function(error) {
 					console.log('error')
 				})
-				console.log(that.goodsList)
+				
 			},
 			toCategory(e){
-				console.log(e+"***")
-				//uni.showToast({title: e.name,icon:"none"});
 				uni.navigateTo({
 					url: '../goods/goods?id='+e.id
 				});
