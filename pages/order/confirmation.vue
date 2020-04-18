@@ -25,7 +25,7 @@
 			<view class="row" v-for="(row,index) in buylist" :key="index">
 				<view class="goods-info">
 					<view class="img">
-						<image :src="row.goodscover"></image>
+						<image :src="row.goods.cover"></image>
 					</view>
 					<view class="info">
 						<view class="title">{{row.goods.name}}</view>
@@ -46,14 +46,14 @@
 					已扣除{{int}}积分抵扣{{deduction}}元
 				</view>
 			</view> -->
-			<view class="row">
+			<!-- <view class="row">
 				<view class="left">
 					备注 :
 				</view>
 				<view class="right">
 					<input placeholder="选填,备注内容" v-model="note" />
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 明细 -->
 		<view class="detail">
@@ -130,7 +130,8 @@
 			for(let i=0;i<this.buylist.length;i++){
 				this.buylist[i]['goods']['cover'] = baseUrl+this.buylist[i]['goods']['cover'];
 			}
-			request.get('/v1/address/getOne/1').then(function(res) {
+			let user_id = getStore('user_id')
+			request.get('/api/address/get/default/'+user_id).then(function(res) {
 				 console.log(res)
 				 that.recinfo=res.data
 				
