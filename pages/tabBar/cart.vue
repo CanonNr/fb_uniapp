@@ -59,7 +59,7 @@
 			</view>
 			<view class="delBtn" @tap="deleteList" v-if="selectedList.length>0">删除</view>
 			<view class="settlement">
-				<view class="sum">合计:<view class="money">￥{{sumPrice}}</view></view>
+				<view class="sum">合计:<view class="money">￥{{sumPrice.toFixed(2)}}</view></view>
 				<view class="btn" @tap="toConfirmation">结算({{selectedList.length}})</view>
 			</view>
 		</view>
@@ -82,20 +82,14 @@ import {
 	export default {
 		data() {
 			return {
-				sumPrice:'0.00',
+				sumPrice:0,
 				headerPosition:"fixed",
 				headerTop:null,
 				statusTop:null,
 				selectedList:[],
 				orderid:null,
 				isAllselected:false,
-				goodsList:[
-					{id:1,goodscover:'../../static/img/goods/p1.jpg',goodsname:'111商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:大份',price:127.5,number:1,selected:false},
-					{id:2,goodscover:'../../static/img/goods/p2.jpg',goodsname:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:大份',price:127.5,number:1,selected:false},
-					{id:3,goodscover:'../../static/img/goods/p3.jpg',goodsname:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:大份',price:127.5,number:1,selected:false},
-					{id:4,goodscover:'../../static/img/goods/p4.jpg',goodsname:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:大份',price:127.5,number:1,selected:false},
-					{id:5,goodscover:'../../static/img/goods/p5.jpg',goodsname:'商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题',spec:'规格:大份',price:127.5,number:1,selected:false}
-				],
+				goodsList:[],
 				//控制滑动效果
 				theIndex:null,
 				oldIndex:null,
@@ -221,10 +215,9 @@ import {
 			
 			//商品跳转
 			toGoods(e){
-				console.log(e)
 				uni.showToast({title: '商品'+e.id,icon:"none"});
 				uni.navigateTo({
-					url: '../goods/goods?id='+e.id 
+					url: '../goods/goods?id='+e.goods_id 
 				});
 			},
 			//跳转确认订单页面
@@ -283,6 +276,11 @@ import {
 			// 选中商品
 			selected(index){
 				this.goodsList[index].selected = this.goodsList[index].selected?false:true;
+				if(this.goodsList[index].selected){
+					this.sumPrice = parseFloat(this.sumPrice) + parseFloat(this.goodsList[index]['goods']['price'])
+				}else{
+					this.sumPrice = parseFloat(this.sumPrice) - parseFloat(this.goodsList[index]['goods']['price']) 
+				}
 				let i = this.selectedList.indexOf(this.goodsList[index].id);
 				i>-1?this.selectedList.splice(i, 1):this.selectedList.push(this.goodsList[index].id);
 				this.isAllselected = this.selectedList.length == this.goodsList.length;
@@ -292,10 +290,16 @@ import {
 			allSelect(){
 				let len = this.goodsList.length;
 				let arr = [];
+				let sumPrice = 0;
 				for(let i=0;i<len;i++){
+					console.log(this.isAllselected)
 					this.goodsList[i].selected = this.isAllselected? false : true;
 					arr.push(this.goodsList[i].id);
+					if(!this.isAllselected){
+						sumPrice = parseFloat(sumPrice) + parseFloat(this.goodsList[i]['goods']['price'])
+					}
 				}
+				this.sumPrice = sumPrice;
 				this.selectedList = this.isAllselected?[]:arr;
 				this.isAllselected = this.isAllselected||this.goodsList.length==0?false : true;
 				this.sum();
@@ -315,18 +319,18 @@ import {
 			},
 			// 合计
 			sum(e,index){
-				this.sumPrice=0;
-				let len = this.goodsList.length;
-				for(let i=0;i<len;i++){
-					if(this.goodsList[i].selected) {
-						if(e && i==index){
-							this.sumPrice = this.sumPrice + (e.detail.value*this.goodsList[i].price);
-						}else{
-							this.sumPrice = this.sumPrice + (this.goodsList[i].number*this.goodsList[i].price);
-						}
-					}
-				}
-				this.sumPrice = this.sumPrice.toFixed(2);
+				// this.sumPrice=0;
+				// let len = this.goodsList.length;
+				// for(let i=0;i<len;i++){
+				// 	if(this.goodsList[i].selected) {
+				// 		if(e && i==index){
+				// 			this.sumPrice = this.sumPrice + (e.detail.value*this.goodsList[i].price);
+				// 		}else{
+				// 			this.sumPrice = this.sumPrice + (this.goodsList[i].number*this.goodsList[i].price);
+				// 		}
+				// 	}
+				// }
+				// this.sumPrice = this.sumPrice.toFixed(2);
 			},
 			discard() {
 				//丢弃
