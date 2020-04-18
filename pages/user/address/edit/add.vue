@@ -58,10 +58,6 @@
 </template>
 
 <script>
-	import {
-		setStore,
-		getStore
-	} from '../../../../common/utils.js';
 	import {request} from '../../../../libs/request';
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	export default {
@@ -136,33 +132,36 @@
 					uni.showToast({title:'请选择收件地址',icon:'none'});
 					return ;
 				}
-				// uni.showLoading({
-				// 	title:'正在提交'
-				// })
+				uni.showLoading({
+					title:'正在提交'
+				})
 				
 				console.log(data)
-	
-					const userid=getStore('user_id');
+				//实际应用中请提交ajax,模板定时器模拟提交效果
+				setTimeout(()=>{
+					const userid=getStore('userid');
 					// const userPhone=getStore('userPhone');
-					request.get('/api/address/add',{
-						'head':data.head,
-						'name':data.name,
-						'tel':data.tel,
-						'isDefault':data.isDefault,
-						'address':data.address.detailed,
-						'label':data.address.region.label,
-						'user_id':userid,
-						}).then(function(res) {
-						//
-				 		uni.navigateTo({
-				 			url: '../address'
-							
-				 		});
+					request.post('/v1/address/addOne',{'head':data.head,'name':data.name,'tel':data.tel,'isDefault':data.isDefault,'address':data.address.detailed,'label':data.address.region.label,'openid':userid}).then(function(res) {
+						console.log(res)
+					
+					
+						
+				
+						uni.hideLoading();
+				// 		uni.navigateBack();
 					}, function(error) {
 						console.log('error')
 					})
 					
-				
+					// uni.setStorage({
+					// 	key:'saveAddress',
+					// 	data:data,
+					// 	success() {
+					// 		uni.hideLoading();
+					// 		uni.navigateBack();
+					// 	}
+					// })
+				},300)
 				
 				
 			}
