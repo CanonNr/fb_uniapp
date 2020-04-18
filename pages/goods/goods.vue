@@ -127,17 +127,18 @@
 		<view class="swiper-box">
 			<swiper circular="true" autoplay="true" @change="swiperChange">
 				<swiper-item v-for="swiper in swiperList" :key="swiper.id">
-					<image :src="goodsData.img" @tap="toSwiper(swiper)"></image>
+					<image :src="swiper.img" @tap="toSwiper(swiper)"></image>
 				</swiper-item>
 			</swiper>
 			<view class="indicator">{{currentSwiper+1}}/{{swiperList.length}}</view>
 		</view>
 		<!-- 标题 价格 -->
 		<view class="info-box goods-info">
-			<view class="price">￥{{goodsData.price}}</view>
 			<view class="title">
-				{{goodsData.goods_name}}
+				<h2>{{goodsData.name}}</h2>
 			</view>
+			<view class="price">￥{{goodsData.price}}</view>
+			
 		</view>
 		<!-- 服务-规则选择 -->
 		<view class="info-box spec">
@@ -158,15 +159,12 @@
 				<view class="arrow"><view class="icon xiangyou"></view></view>
 			</view>
 		</view>
-		<!-- 评价 -->
-		<!-- <view class="info-box comments" id="comments">
+		<!--评价 -->
+		<view class="info-box comments" id="comments">
 			<view class="row">
 				<view class="text">商品评价({{goodsData.comment.number}})</view>
 				<view class="arrow">
-					<view class="show" @tap="showComments(goodsData.id)">
-						查看全部
-						<view class="icon xiangyou"></view>
-					</view>
+				
 				</view>
 			</view>
 			<view class="comment">
@@ -178,8 +176,8 @@
 					{{goodsData.comment.content}}
 				</view>
 			</view>
-		</view> -->
-		<!-- 详情 -->
+		</view> 
+		<!-- 详情-->
 		<view class="description">
 			<view class="title">———— 商品详情 ————</view>
 			<view class="content"><rich-text :nodes="descriptionStr"></rich-text></view>
@@ -195,6 +193,10 @@
 	import {
 		request
 	} from '../../libs/request';
+	
+	import {
+		baseUrl
+	} from 'config/env';
 export default {
 	data() {
 		return {
@@ -222,7 +224,7 @@ export default {
 			// 商品信息
 			goodsData:{
 				id:1,
-				goods_name:"12312商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
+				name:"12312商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
 				price:"127.00",
 				number:1,
 				service:[
@@ -249,31 +251,34 @@ export default {
 		let that = this;
 		let id = this.$route.query.id
 		let user_id = localStorage.getItem('user_id')
-		request.get('/v1/goods/getone/'+id).then(function(res) {
-			that.goodsData.goods_name=res.data.goods_name;
+		request.get('/api/goods/get/'+id).then(function(res) {
+			that.goodsData.name=res.data.name;
 			that.goodsData.id=res.data.id
 			that.goodsData.price=res.data.price
-			that.goodsData.img=res.data.goods_cover
-			that.swiperList.img=res.data.goods_cover 
+			that.swiperList[0]={
+				id:1,
+				img:baseUrl+res.data.cover
+			}
+			console.log(that.swiperList)
 		}, function(error) {
 			console.log('error')
 		})
 		
 		// 收藏
 		
-		request.get('/v1/user/get/love',{
-			'goodsid':id,
-			'userid':user_id,
-		}).then(function(res) {
-			console.log(res.data.status)
-			if(res.data.status === "true"){
-				that.isKeep = true
-			}else{
-				that.isKeep = false
-			}	
-		}, function(error) {
-			console.log('error')
-		})
+		// request.get('/v1/user/get/love',{
+		// 	'goodsid':id,
+		// 	'userid':user_id,
+		// }).then(function(res) {
+		// 	console.log(res.data.status)
+		// 	if(res.data.status === "true"){
+		// 		that.isKeep = true
+		// 	}else{
+		// 		that.isKeep = false
+		// 	}	
+		// }, function(error) {
+		// 	console.log('error')
+		// })
 		
 	},
 	onShow() {
