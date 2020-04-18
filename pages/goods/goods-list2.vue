@@ -132,7 +132,7 @@
 			toGoods(e){
 				uni.showToast({title: '商品'+e.id,icon:"none"});
 				uni.navigateTo({
-					url: '../goods/goods?cid='+e.id 
+					url: '../goods/goods?id='+e.id 
 				});
 			},
 			//排序类型

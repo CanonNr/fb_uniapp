@@ -12,22 +12,22 @@
 				<view class="tis" v-if="goodsList.length==0">没有数据~</view>
 				<view class="row" v-for="(row,index) in goodsList" :key="index" >
 					<!-- 删除按钮 -->
-					<view class="menu" @tap.stop="deleteCoupon(row.id,goodsList)">
+					<!-- <view class="menu" @tap.stop="deleteCoupon(row.id,goodsList)">
 						<view class="icon shanchu"></view>
-					</view>
+					</view> -->
 					<!-- content -->
 					<view class="carrier" :class="[typeClass=='goods'?theIndex==index?'open':oldIndex==index?'close':'':'']" @touchstart="touchStart(index,$event)" @touchmove="touchMove(index,$event)" @touchend="touchEnd(index,$event)">
-						<view class="goods-info" @tap="toGoods(row)">
+						<view class="goods-info" @tap="toGoods(row.goods_id)">
 							<view class="img">
-								<image :src="row.img"></image>
+								<image :src="row.goods.cover"></image>
 							</view>
 							<view class="info">
-								<view class="title">{{row.name}}</view>
+								<view class="title">{{row.goods.name}}</view>
 								<view class="price-number">
 									<view class="keep-num">
 										
 									</view>
-									<view class="price">￥{{row.price}}</view>
+									<view class="price">￥{{row.goods.price}}</view>
 									
 								</view>
 							</view>
@@ -68,6 +68,9 @@
 	import {
 		request
 	} from '../../../libs/request';
+	import {
+		baseUrl
+	} from 'config/env';
 	export default {
 		data() {
 			return {
@@ -113,17 +116,26 @@
 				},1);
 			// #endif
 			var that=this
-			const userid=getStore('userid');
-			request.get('/v1/getlove/'+userid).then(function(res) {
-				 console.log(res)
-				 that.goodsList=res.data
+			const userid=getStore('user_id');
+			request.get('/api/collect/list/'+userid).then(function(res) {
+				console.log(res)
 				
-				 
+				let data = res.data;
+				for(let i=0;i<data.length;i++){
+					data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover'];
+				}
+				console.log(data)
+				 that.goodsList=res.data
 			}, function(error) {
 				console.log('error')
 			})
 		},
 		methods: {
+			toGoods(id){
+				uni.navigateTo({
+					url: '../../goods/goods?id='+id 
+				});
+			},
 			switchType(type){
 				if(this.typeClass==type){
 					return ;
