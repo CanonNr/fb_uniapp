@@ -8,10 +8,10 @@
 		<!-- 账号密码输入框 -->
 		<view class="form">
 			<view class="username">
-				<input placeholder="请输入手机号" v-model="phoneNumber" placeholder-style="color: rgba(255,255,255,0.8);"/>
+				<input placeholder="请输入用户名" v-model="username" placeholder-style="color: rgba(255,255,255,0.8);"/>
 			</view>
 			<view class="password">
-				<input placeholder="请输入密码" v-model="passwd" password=true placeholder-style="color: rgba(255,255,255,0.8);"/>
+				<input placeholder="请输入密码" v-model="password" password=true placeholder-style="color: rgba(255,255,255,0.8);"/>
 			</view>
 			<view class="btn" @tap="doLogin">登 录</view>
 			<view class="res">
@@ -33,15 +33,8 @@
 	export default {
 		data() {
 			return {
-				phoneNumber: '',
-				passwd:'',
-				isShowOauth:false,
-				showProvider:{
-					weixin:false,
-					qq:false,
-					sinaweibo:false,
-					xiaomi:false
-				}
+				username: '',
+				password:''
 			}
 		},
 		onShow() {
@@ -82,44 +75,47 @@
 			doLogin(){
 				uni.hideKeyboard();
 				//验证手机号码
-				if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber))){ 
-					uni.showToast({title: '请填写正确手机号码',icon:"none"});
+				if(!(/^[a-zA-Z0-9_-]{4,16}$/.test(this.username))){
+					uni.showToast({title: '请填写4-16位数字字母组合用户名',icon:"none"});
 					return false; 
-				}
+				} 
+				if(this.password.length < 6){
+					uni.showToast({title: '密码长度最少6位',icon:"none"});
+					return false; 
+				} 
 				uni.showLoading({
 					title: '提交中...'
 				})
 				//模板示例比对本地储存的用户信息，实际使用中请替换为上传服务器比对。
 				setTimeout(()=>{
-					
-					
-					
-						request.post('/v1/user/login',
-						{'upass':this.passwd,'tel':this.phoneNumber,}).then(function(res) {
 						
-						uni.hideLoading()
-						if(res.code=100){
-							
-										uni.showToast({title: '登录成功',icon:"success"});
-										console.log(res.data)
-										 	setStore('userid', res.data.wecha_id);
-											
-											uni.switchTab({
-												url:"../tabBar/category"
-											})
-										
-										}else{
-											uni.showToast({title: '账号或密码不正确',icon:"none"});
-											}
-										
+				request.get('/api/login',{'username':this.username,'password':this.password}).then(function(res) {
+
+					uni.hideLoading()
+					if(res.code = 200){
+
+						uni.showToast({title: '登录成功',icon:"success"});
 						
-							
-					
-							uni.hideLoading();
-					// 		uni.navigateBack();
-						}, function(error) {
-							console.log('error')
+						setStore('username', res.data.username);
+						setStore('password', res.data.password);
+						setStore('token', res.data.token);
+						
+						uni.switchTab({
+							url:"../tabBar/category"
 						})
+
+					}else{
+						uni.showToast({title: '账号或密码不正确',icon:"none"});
+					}
+
+				
+					
+			
+					uni.hideLoading();
+			// 		uni.navigateBack();
+				}, function(error) {
+					console.log('error')
+				})
 					
 					
 					// let md5PW = md5(this.passwd)

@@ -1,20 +1,9 @@
 <template>
 	<view>
-		<view class="status" :style="{position:headerPosition,top:statusTop}"></view>
-		<view class="header" :style="{position:headerPosition,top:headerTop}">
-			<view class="addr"></view>
-			<view class="input-box">
-				
-			</view>
-			<view class="icon-btn">
-				<!-- <view class="icon tongzhi" @tap="toMsg"></view> -->
-				<!-- <view class="icon setting" @tap="toSetting"></view> -->
-			</view>
-		</view>
 		<!-- 占位 -->
-		<view class="place"></view>
-		<!-- 用户信息 -->
-		<view class="user">
+		
+		<view class="user" style='padding-top:50px'>
+			<view ></view>
 			<!-- 头像 -->
 			<view class="left">
 				<image :src="user.face" @tap="toSetting"></image>
@@ -29,17 +18,8 @@
 				<view class="icon qr"></view>
 			</view>
 		</view>
-		<!-- VIP banner -->
-		<!-- <view class="VIP">
-			<view class="img">
-				<image src="../../static/img/VIP.png"></image>
-			</view>
-			<view class="title">开通VIP会员</view>
-			<view class="tis">会员特权</view>
-		</view> -->
-		<!-- 订单-余额 -->
+	
 		<view class="order">
-		
 			<view class="list">
 				<view class="box" v-for="(row,index) in orderList" :key="index" @tap="toOrderList(index)">
 					<view class="img">
@@ -48,31 +28,6 @@
 					<view class="text">{{row.text}}</view>
 				</view>
 			</view>
-			
-		<!-- 	<view class="balance-info">
-				<view class="left">
-					<view class="box">
-						<view class="num">{{user.integral}}</view>
-						<view class="text">积分</view>
-					</view>
-					<view class="box">
-						<view class="num">{{user.envelope}}</view>
-						<view class="text">佣金</view>
-					</view>
-					<view class="box">
-						<view class="num">{{user.balance}}</view>
-						<view class="text">余额</view>
-					</view>
-				</view>
-				<view class="right">
-					<view class="box" @tap="toDeposit">
-						<view class="img">
-							<view class="icon chongzhi"></view>
-						</view>
-						<view class="text">充值</view>
-					</view>
-				</view>
-			</view> -->
 		</view>
 		<!-- 工具栏 -->
 		<view class="toolbar">
@@ -107,9 +62,9 @@ import {
 				statusTop:null,
 				//个人信息,
 				user:{
-					username:'游客1002',
+					username:'',
 					face:'../../static/img/face.jpg',
-					signature:'点击昵称跳转登录/注册页',
+					signature:'',
 					integral:0,
 					balance:0,
 					envelope:0
@@ -124,16 +79,7 @@ import {
 				// 工具栏列表
 				mytoolbarList:[
 					{url:'../user/keep/keep',text:'我的收藏',img:'../../static/img/user/point.png'},
-					// {url:'../user/coupon/coupon',text:'优惠券',img:'../../static/img/user/quan.png'}, 
-					// {url:'',text:'新客豪礼',img:'../../static/img/user/renw.png'},
-					// {url:'',text:'领红包',img:'../../static/img/user/momey.png'},
-					
-					{url:'../user/address/address',text:'配送地址',img:'../../static/img/user/addr.png'},
-					// {url:'',text:'账户安全',img:'../../static/img/user/security.png'},
-					// {url:'',text:'银行卡',img:'../../static/img/user/bank.png'},
-					//{url:'',text:'抽奖',img:'../../static/img/user/choujiang.png'},
-					// {text:'客服',img:'../../static/img/user/kefu.png'},
-					// {text:'签到',img:'../../static/img/user/mingxi.png'}
+					{url:'../user/address/address',text:'配送地址',img:'../../static/img/user/addr.png'}
 					
 				]
 			}
@@ -168,42 +114,15 @@ import {
 			});
 		},
 		onShow(){
-			
-			
-			const userid=getStore('userid');
-			//option.cid=1;
-			var that = this
-			//var contactmsg = 
-			request.get('/v1/user/getone/'+userid).then(function(res) {
-				 console.log(res)
-			that.user.username = res.data.wecha_name;
-			that.user.signature = res.data.tel;
-			// username:'游客1002',
-			// face:'../../static/img/face.jpg',
-			// signature:'点击昵称跳转登录/注册页',
-			// integral:0,
-			// balance:0,
-			// envelope:0
-			
-			}, function(error) {
-				console.log('error')
-			})
-			
-			// uni.getStorage({
-			// 	key: 'UserInfo',
-			// 	success: (res)=>{
-			// 		if(!res.data){
-			// 			if(this.isfirst){
-			// 				//this.toLogin();
-			// 			}
-			// 			return ;
-			// 		}
-			// 		this.user = res.data;
-			// 	},
-			// 	fail:(e)=>{
-			// 		//this.toLogin(); 
-			// 	}
-			// });
+			const username=getStore('username');
+			const token=getStore('token');
+			console.log(username.length==0)
+			console.log( token.length)
+			if(username.length != 0 && token.length != 0 ){
+				this.user.username = username;
+			}else{
+				this.user.username = "点 击 登 录";	
+			}		
 		},
 		methods: {
 			//消息列表
