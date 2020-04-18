@@ -109,6 +109,7 @@ import {
 		    }, 1000);
 		},
 		onLoad() {
+			this.sumPrice = 0.0;
 			//兼容H5下结算条位置
 			// #ifdef H5
 				this.footerbottom = document.getElementsByTagName('uni-tabbar')[0].offsetHeight+'px';
@@ -248,7 +249,7 @@ import {
 			},
 			//删除商品
 			deleteGoods(id){
-				let userid = getStore('user_id');				request.get('/api/cart/delete/'+userid+'/'+id).then(function(res) {					uni.navigateTo({						url:'../tabBar/cart'					})				}, function(error) {					console.log('error')				})
+				let userid = getStore('user_id');				request.get('/api/cart/delete/'+userid+'/'+id).then(function(res) {								}, function(error) {					console.log('error')				})
 				
 				let len = this.goodsList.length;
 				for(let i=0;i<len;i++){
@@ -261,6 +262,7 @@ import {
 				this.sum();
 				this.oldIndex = null;
 				this.theIndex = null;
+				this.sumPrice = 0.0;
 			},
 			// 删除商品s
 			deleteList(){

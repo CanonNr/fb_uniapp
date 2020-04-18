@@ -28,13 +28,9 @@
 						<image :src="row.goodscover"></image>
 					</view>
 					<view class="info">
-						<view class="title">{{row.goodsname}}</view>
-						<view class="spec">规格:{{row.goodsspec}} 数量:{{row.number}}</view>
+						<view class="title">{{row.goods.name}}</view>
 						<view class="price-number">
-							<view class="price">￥{{row.price*row.number}}</view>
-							<view class="number">
-								
-							</view>
+							<view class="price">￥{{row.goods.price}}</view>
 						</view>
 					</view>
 				</view>
@@ -107,13 +103,16 @@
 	import {
 		request
 	} from '../../libs/request';
+	import {
+		baseUrl
+	} from 'config/env';
 	export default {
 		data() {
 			return {
 				buylist:[],		//订单列表
 				goodsPrice:0.0,	//商品合计价格
 				sumPrice:0.0,	//用户付款价格
-				freight:12.00,	//运费
+				freight:2.00,	//运费
 				orderid:null,
 				note:'',		//备注
 				int:0,		//抵扣积分
@@ -127,6 +126,10 @@
 		onLoad() {
 			var that = this
 			//var contactmsg = 
+			
+			for(let i=0;i<this.buylist.length;i++){
+				this.buylist[i]['goods']['cover'] = baseUrl+this.buylist[i]['goods']['cover'];
+			}
 			request.get('/v1/address/getOne/1').then(function(res) {
 				 console.log(res)
 				 that.recinfo=res.data
@@ -146,8 +149,9 @@
 					//合计
 					let len = this.buylist.length;
 					for(let i=0;i<len;i++){
-						this.goodsPrice = this.goodsPrice + (this.buylist[i].number*this.buylist[i].price);
+						this.goodsPrice = parseFloat(this.goodsPrice) + parseFloat((this.buylist[i].goods.price));
 					}
+					
 					this.deduction = this.int/100;
 					this.sumPrice = this.goodsPrice-this.deduction+this.freight;
 					//强制保留两位小数
