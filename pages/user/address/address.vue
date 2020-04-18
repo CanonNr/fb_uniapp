@@ -5,7 +5,7 @@
 				<view class="row" v-for="(row,index) in addressList" :key="index" @tap="select(row)">
 					<view class="left">
 						<view class="head">
-							{{row.head}}
+							{{row.name.substr(0,1)}}
 						</view>
 					</view>
 					<view class="center">
