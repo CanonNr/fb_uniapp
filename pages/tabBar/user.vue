@@ -71,8 +71,8 @@ import {
 				},
 				// 订单类型
 				orderList:[
-					{text:'待付款',icon:"fukuan"},
-					{text:'待接单',icon:"fahuo"},
+					
+					{text:'待发货',icon:"fahuo"},
 					{text:'待送达',icon:"shouhuo"},
 					{text:'已送达',icon:"pingjia"},
 				],

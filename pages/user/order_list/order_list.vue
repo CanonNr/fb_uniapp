@@ -2,6 +2,9 @@
 	<view>
 		<!-- 顶部导航 -->
 		<view class="topTabBar" :style="{position:headerPosition,top:headerTop}">
+			<view class="grid"   :key="10" @tap="showType(10)">
+				<view class="text" :class="[10==tabbarIndex?'on':'']">全部</view>
+			</view>
 			<view class="grid" v-for="(grid,tbIndex) in orderType" :key="tbIndex" @tap="showType(tbIndex)">
 				<view class="text" :class="[tbIndex==tabbarIndex?'on':'']">{{grid}}</view>
 			</view>
@@ -19,11 +22,11 @@
 					<view class="type">{{typeText[row.type]}}</view>
 					<view class="order-info">
 						<view class="left">
-							<image :src="row.img"></image>
+							<image :src="row.goods.cover"></image>
 						</view>
 						<view class="right">
 							<view class="name">
-								{{row.name}}
+								{{row.order_name}}
 							</view>
 							<view class="spec">{{row.spec}}</view>
 						<!-- 	<view class="price-number">
@@ -34,10 +37,9 @@
 						
 					</view>
 					<view class="detail">
-						<!-- <view class="number">共{{row.numner}}件商品</view> --><view class="sum">合计￥<view class="price">{{row.price}}</view></view><view class="nominal">(含运费 ￥{{row.freight}})</view>
+						<!-- <view class="number">共{{row.numner}}件商品</view> --><view class="sum">合计￥<view class="price">{{row.total}}</view></view><view class="nominal">(含运费 ￥{{row.freight}})</view>
 					</view>
 					<view class="btns">
-						<block v-if="row.type=='0'"><view class="pay" @tap="toPayment(row)">付款</view></block>
 						<block v-if="row.type=='1'"></block>
 						<block v-if="row.type=='2'"><view class="pay" @tap="toFinish(row)">确认收货</view></block>
 						<block v-if="row.type=='3'"><view class="default">评价</view></block>
@@ -57,18 +59,18 @@
 	import {
 			request
 		} from '../../../libs/request';
+		import {
+			baseUrl
+		} from 'config/env';
 	export default {
 		data() {
 			return {
 				headerPosition:"fixed",
 				headerTop:"0px",
 				typeText:{
-					0:'等待付款',
-					1:'商家配送中',
-					2:'已送达',
-					3:'交易已完成',
+					
 				},
-				orderType: ['全部','待付款','待送达','已送达','评价'],
+				orderType: {0:'待发货',1:'待送达',2:'已送达'},
 				//订单列表 演示数据
 				orderList:[
 					[
@@ -99,7 +101,7 @@
 		},
 		onLoad(option) {
 			//option为object类型，会序列化上个页面传递的参数
-			console.log("option: " + JSON.stringify(option));
+			console.log(option.tbIndex);
 			let tbIndex = parseInt(option.tbIndex)+1;
 			this.list = this.orderList[tbIndex];
 			this.tabbarIndex = tbIndex;
@@ -114,20 +116,18 @@
 				},1);
 			// #endif
 			
-			const userid=getStore('userid');
+			const userid=getStore('user_id');
 			//option.cid=1;
 			var that = this
 			//var contactmsg = 
-			request.get('/v1/getorderlist/'+userid).then(function(res) {
-				 console.log(res)
-				 that.orderList=res.data
-				 // that.goodsData.id=res.data.id,
-				 //  that.goodsData.price=res.data.price,
-				 //  that.goodsData.img=res.data.goods_cover,
-				 // that.swiperList.img=res.data.goods_cover,
-				  
-				// console.log(that.goodsData)
-				 
+			
+			request.get('/api/order/get/'+userid+'/'+option.tbIndex).then(function(res) {
+				let data = res.data;
+				for(let i=0;i<data.length;i++){
+					data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover']
+					
+				}
+				 that.list=data
 			}, function(error) {
 				console.log('error')
 			})
@@ -140,7 +140,7 @@
 			var that = this
 			//var contactmsg = 
 			request.get('/v1/getorderlist/'+userid).then(function(res) {
-				 console.log(res)
+				 
 				 that.orderList=res.data
 				 // that.goodsData.id=res.data.id,
 				 //  that.goodsData.price=res.data.price,
@@ -160,8 +160,22 @@
 		},
 		methods: {
 			showType(tbIndex){
+				console.log(tbIndex)
 				this.tabbarIndex = tbIndex;
-				this.list = this.orderList[tbIndex];
+				this.list = [];
+				var that = this
+				const userid=getStore('user_id');
+				
+				request.get('/api/order/get/'+userid+'/'+tbIndex).then(function(res) {
+					let data = res.data;
+					for(let i=0;i<data.length;i++){
+						data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover']
+						
+					}
+					 that.list=data
+				}, function(error) {
+					console.log('error')
+				})
 			},
 			
 			toFinish(row){

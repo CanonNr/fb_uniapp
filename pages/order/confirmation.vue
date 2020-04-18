@@ -197,7 +197,7 @@
 				let len = this.buylist.length;
 				for(let i=0;i<len;i++){
 					paymentOrder.push(this.buylist[i]);
-					goodsid.push(this.buylist[i].id);
+					goodsid.push(this.buylist[i].goods.id);
 				}
 				if(paymentOrder.length==0){
 					uni.showToast({title:'订单信息有误，请重新购买',icon:'none'});
@@ -213,13 +213,13 @@
 				}
 				console.log(order_name)
 				setTimeout(()=>{	
-					console.log(goodsid)
-					var b = goodsid.join("-");
+					// console.log(goodsid)
+					// var b = goodsid.join("-");
 					const userid=getStore('user_id');
 					var that=this
 					request.get('/api/order/add',
 						{
-							'goods_id':b,
+							'goods_id':goodsid[0],
 							'freight':this.freight,
 							'total':this.sumPrice,
 							'user_id':userid,
