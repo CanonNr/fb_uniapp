@@ -12,8 +12,8 @@
 		<view class="goods-list">
 			<view class="product-list">
 				<view class="product" v-for="(goods) in goodsList" :key="goods.id" @tap="toGoods(goods)">
-					<image mode="widthFix" :src="goods.goods_cover"></image>
-					<view class="name">{{goods.goods_name}}</view>
+					<image mode="widthFix" :src="goods.cover"></image>
+					<view class="name">{{goods.name}}</view>
 					<view class="info">
 						<view class="price">{{goods.price}}</view>
 					</view>
@@ -28,6 +28,10 @@
 	import {
 		request
 	} from '../../libs/request';
+	import {
+		baseUrl
+	} from 'config/env';
+	
 	export default {
 		data() {
 			return {
@@ -49,19 +53,16 @@
 		//onshow 载入页面之后
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
 			console.log(option.searchname); //打印出上个页面传递的参数。
-			
-			//获取客服的信息
+		
 			var that = this 
-			//var contactmsg = 
-			request.get('/v1/goods/getlist2/'+option.searchname).then(function(res) {
-				 console.log(res)
-				 that.list=res.data
-				  that.goodsList=res.data
-				 // that.setData({
-					//  'goodsList':res.data
-				 // })
-				 
-				//that.contactTel=vaule.data.contact_tel
+			
+			request.get('/api/goods/search/'+option.searchname).then(function(res) {
+				console.log(res)
+				 let data = res.data;
+				 for(let i=0;i<data.length;i++){
+				 	data[i]['cover'] = baseUrl+data[i]['cover'];
+				 }
+				 that.goodsList=data 
 			}, function(error) {
 				console.log('error')
 			})
