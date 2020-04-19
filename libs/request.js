@@ -29,6 +29,9 @@ const send = (url, data = {}, method = 'POST', showLoading = true, base_url = ''
 				resolve(res.data)
 			},
 			fail: (res) => {
+				uni.navigateTo({
+					url:'../login/login'
+				})
 				uni.showModal({
 					content: "请求失败，请重试！",
 					showCancel: false
