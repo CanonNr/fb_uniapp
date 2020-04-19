@@ -104,6 +104,13 @@
 		    }, 1000);
 		},
 		onLoad() {
+			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
 			//兼容H5下排序栏位置
 			// #ifdef H5
 				//定时器方式循环获取高度为止，这么写的原因是onLoad中head未必已经渲染出来。
@@ -116,7 +123,7 @@
 				},1);
 			// #endif
 			var that=this
-			const userid=getStore('user_id');
+			
 			request.get('/api/collect/list/'+userid).then(function(res) {
 				console.log(res)
 				

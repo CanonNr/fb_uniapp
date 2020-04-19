@@ -358,7 +358,13 @@ export default {
 			
 			let id = this.$route.query.id
 			const userid=getStore('user_id');
-			
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+				return
+			}
+				
 			request.get('/api/goods/cart/add/'+userid+'/'+id,).then(function(res) {
 				console.log(res)
 				uni.showToast({title: "已加入购物车"});

@@ -93,6 +93,12 @@
 				this.isSelect = true;
 			}
 			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
 			var that = this
 			//var contactmsg = 
 			request.get('/api/address/get/'+userid).then(function(res) {

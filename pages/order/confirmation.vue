@@ -117,7 +117,7 @@
 				note:'',		//备注
 				int:0,		//抵扣积分
 				deduction:0,	//抵扣价格
-				recinfo:{id:1,name:"大黑哥",head:"大",tel:"18816881688","label":"广东省-深圳市-福田区",address:'深南大道1111号无名摩登大厦6楼A2',isDefault:true}
+				recinfo:{}
 					
 
 			};
@@ -201,6 +201,10 @@
 				}
 				if(paymentOrder.length==0){
 					uni.showToast({title:'订单信息有误，请重新购买',icon:'none'});
+					return ;
+				}
+				if(this.recinfo == null){
+					uni.showToast({title:'请正确填写收货地址',icon:'none'});
 					return ;
 				}
 				//本地模拟订单提交UI效果

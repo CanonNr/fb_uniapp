@@ -101,6 +101,14 @@
 			};
 		},
 		onLoad(option) {
+			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
+			
 			//option为object类型，会序列化上个页面传递的参数
 			console.log(option.tbIndex);
 			
@@ -122,7 +130,7 @@
 				},1);
 			// #endif
 			
-			const userid=getStore('user_id');
+			//const userid=getStore('user_id');
 			//option.cid=1;
 			var that = this
 			var order_type = 10;

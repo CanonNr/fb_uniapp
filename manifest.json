@@ -1,6 +1,6 @@
 {
     "name" : "商城模板",
-    "appid" : "__UNI__0572311",
+    "appid" : "__UNI__5EF9E11",
     "description" : "",
     "versionName" : "1.0.5",
     "versionCode" : "100",
@@ -52,6 +52,9 @@
             },
             /* ios打包配置 */
             "sdkConfigs" : {}
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     /* SDK配置 */
@@ -63,11 +66,40 @@
         "setting" : {
             "urlCheck" : true
         },
-        "permission" : {}
+        "permission" : {},
+        "uniStatistics" : {
+            "enable" : false
+        }
     },
     "h5" : {
         "devServer" : {
             "https" : false
+        },
+        "uniStatistics" : {
+            "enable" : false
         }
+    },
+    "mp-baidu" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-toutiao" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-alipay" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-qq" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "uniStatistics" : {
+        "enable" : false
     }
 }

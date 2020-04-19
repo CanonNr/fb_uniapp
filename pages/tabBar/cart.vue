@@ -225,8 +225,15 @@ import {
 			toConfirmation(){
 				let tmpList=[];
 				let len = this.goodsList.length;
+				let userid = getStore('user_id');
 				for(let i=0;i<len;i++){
 					if(this.goodsList[i].selected) {
+						let id = this.goodsList[i]['id']
+						request.get('/api/cart/delete/'+userid+'/'+id).then(function(res) {
+						
+						}, function(error) {
+							console.log('error')
+						})
 						tmpList.push(this.goodsList[i]);
 					}
 				}
