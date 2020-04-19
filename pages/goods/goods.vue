@@ -41,7 +41,7 @@
 			</view>
 			<view class="btn">
 				<view class="joinCart" @tap="joinCart">加入购物车</view>
-				<view class="buy" @tap="buy">立即购买</view>
+				<!-- <view class="buy" @tap="buy">立即购买</view> -->
 			</view>
 		</view>
 		<!-- share弹窗 -->
@@ -162,22 +162,20 @@
 		<!--评价 -->
 		<view class="info-box comments" id="comments">
 			<view class="row">
-				<view class="text">商品评价({{goodsData.comment.number}})</view>
-				<view class="arrow">
-				
-				</view>
+				<view class="text">商品评价</view>
 			</view>
-			<view class="comment">
+			<view class="comment" v-for="(item,index) in conment">
 				<view class="user-info">
-					<view class="face"><image :src="goodsData.comment.userface"></image></view>
-					<view class="username">{{goodsData.comment.username}}</view>
-				</view>
+					<view class="username"> {{item.user.username}}  </view>
+				</view> 
 				<view class="content">
-					{{goodsData.comment.content}}
-				</view>
+					{{item.content}}
+				 </view>
 			</view>
+			
+
 		</view> 
-		<!-- 详情-->
+		<!-- 详情 -->
 		<view class="description">
 			<view class="title">———— 商品详情 ————</view>
 			<view class="content"><rich-text :nodes="descriptionStr"></rich-text></view>
@@ -233,14 +231,8 @@ export default {
 					// {name:"7天退换",description:"此商品享受7天无理由退换服务"}
 				],
 				spec:["小份","中份","大份"],
-				comment:{
-					number:102,
-					userface:'../../static/img/face.jpg',
-					username:'大黑哥',
-					content:'很不错，之前买了很多次了，很好看，能放很久，和图片色差不大，值得购买！'
-				}
-				
 			},
+			conment:[],
 			selectSpec:null,//选中规格
 			isKeep:false,//收藏
 			//商品描述html
@@ -259,7 +251,6 @@ export default {
 				id:1,
 				img:baseUrl+res.data.cover
 			}
-			console.log(that.swiperList)
 		}, function(error) {
 			console.log('error')
 		})
@@ -268,7 +259,6 @@ export default {
 		
 		if(getStore('token').length >0){
 			request.get('/api/goods/collect/'+user_id+'/'+id).then(function(res) {
-				console.log(res.data.status)
 				if(res.data.status === "true"){
 					that.isKeep = true
 				}else{
@@ -279,10 +269,20 @@ export default {
 			})
 		}
 		
-		
+			
+		if(id.length > 0){
+			request.get('/api/goods/comment/get/'+id).then(function(res) {
+				for(let i = 0; i < res.data.length ; i++){
+					that.conment.push(res.data[i])
+				}
+			}, function(error) {
+				console.log('error')
+			})
+		}
+		console.log(this.conment)
 	},
 	onShow() {
-
+		
 	},
 	onReady(){
 		this.calcAnchor();//计算锚点高度，页面数据是ajax加载时，请把此行放在数据渲染完成事件中执行以保证高度计算正确
@@ -383,7 +383,7 @@ export default {
 		//跳转确认订单页面
 		toConfirmation(){
 			let tmpList=[];
-			let goods = {id:this.goodsData.id,img:'../../static/img/goods/p1.jpg',name:this.goodsData.name,spec:'规格:'+this.goodsData.spec[this.selectSpec],price:this.goodsData.price,number:this.goodsData.number};
+			let goods = {id:this.goodsData.id,cover:'../../static/img/goods/p1.jpg',name:this.goodsData.name,spec:'规格:'+this.goodsData.spec[this.selectSpec],price:this.goodsData.price,number:this.goodsData.number};
 			tmpList.push(goods);
 			uni.setStorage({
 				key:'buylist',

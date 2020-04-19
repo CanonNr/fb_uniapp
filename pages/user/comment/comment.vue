@@ -1,7 +1,6 @@
 <template>
     <div class="box">
         <textarea placeholder="请输入..." maxlength="120" @input="descInput" v-model="desc" class="mytextarea" />
-        <span class="numberV">{{txtVal}}/120</span>
 		<button type="primary" @tap="submit()">提 交</button>
 	</div>
 	
