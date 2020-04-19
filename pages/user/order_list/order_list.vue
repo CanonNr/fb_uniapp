@@ -2,11 +2,11 @@
 	<view>
 		<!-- 顶部导航 -->
 		<view class="topTabBar" :style="{position:headerPosition,top:headerTop}">
-			<view class="grid"   :key="10" @tap="showType(10)">
-				<view class="text" :class="[10==tabbarIndex?'on':'']">全部</view>
-			</view>
+			
 			<view class="grid" v-for="(grid,tbIndex) in orderType" :key="tbIndex" @tap="showType(tbIndex)">
-				<view class="text" :class="[tbIndex==tabbarIndex?'on':'']">{{grid}}</view>
+				
+				<view class="text"  :class="[tbIndex==tabbarIndex?'on':'']">{{grid}}</view>
+				
 			</view>
 		</view>
 		<!-- 考虑非APP端长列表和复杂的DOM使用scroll-view会卡顿，所以漂浮顶部选项卡使用page本身的滑动 -->
@@ -40,9 +40,10 @@
 						<!-- <view class="number">共{{row.numner}}件商品</view> --><view class="sum">合计￥<view class="price">{{row.total}}</view></view><view class="nominal">(含运费 ￥{{row.freight}})</view>
 					</view>
 					<view class="btns">
+						
 						<block v-if="row.type=='1'"></block>
 						<block v-if="row.type=='2'"><view class="pay" @tap="toFinish(row)">确认收货</view></block>
-						<block v-if="row.type=='3'"><view class="default">评价</view></block>
+						<block v-if="row.status=='2' && row.comment_status ==0" ><view class="default" @tap="toComment(row.id)">评价</view></block>
 					
 						
 					</view>
@@ -70,7 +71,7 @@
 				typeText:{
 					
 				},
-				orderType: {0:'待发货',1:'待送达',2:'已送达'},
+				orderType: {10:"全部",11:'待发货',12:'待送达',13:'已送达'},
 				//订单列表 演示数据
 				orderList:[
 					[
@@ -96,13 +97,18 @@
 					
 				],
 				list:[],
-				tabbarIndex:0
+				tabbarIndex:10
 			};
 		},
 		onLoad(option) {
 			//option为object类型，会序列化上个页面传递的参数
 			console.log(option.tbIndex);
-			let tbIndex = parseInt(option.tbIndex)+1;
+			
+			if(option.tbIndex === undefined){
+				option.tbIndex = 10
+			}
+			
+			let tbIndex = parseInt(option.tbIndex);
 			this.list = this.orderList[tbIndex];
 			this.tabbarIndex = tbIndex;
 			//兼容H5下排序栏位置
@@ -119,9 +125,24 @@
 			const userid=getStore('user_id');
 			//option.cid=1;
 			var that = this
-			//var contactmsg = 
-			
-			request.get('/api/order/get/'+userid+'/'+option.tbIndex).then(function(res) {
+			var order_type = 10;
+			console.log(option.tbIndex)
+			switch(option.tbIndex){
+				case '11':
+					order_type = 0;
+					break;
+				case '12':
+					order_type = 1;
+					break;
+				case '13':
+					order_type = 2;
+					break;
+				default:
+					order_type = 10;
+					break;
+			}
+			console.log(order_type)
+			request.get('/api/order/get/'+userid+'/'+order_type).then(function(res) {
 				let data = res.data;
 				for(let i=0;i<data.length;i++){
 					data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover']
@@ -139,19 +160,19 @@
 			//option.cid=1;
 			var that = this
 			//var contactmsg = 
-			request.get('/v1/getorderlist/'+userid).then(function(res) {
+			// request.get('/v1/getorderlist/'+userid).then(function(res) {
 				 
-				 that.orderList=res.data
-				 // that.goodsData.id=res.data.id,
-				 //  that.goodsData.price=res.data.price,
-				 //  that.goodsData.img=res.data.goods_cover,
-				 // that.swiperList.img=res.data.goods_cover,
+			// 	 that.orderList=res.data
+			// 	 // that.goodsData.id=res.data.id,
+			// 	 //  that.goodsData.price=res.data.price,
+			// 	 //  that.goodsData.img=res.data.goods_cover,
+			// 	 // that.swiperList.img=res.data.goods_cover,
 				  
-				// console.log(that.goodsData)
+			// 	// console.log(that.goodsData)
 				 
-			}, function(error) {
-				console.log('error')
-			})
+			// }, function(error) {
+			// 	console.log('error')
+			// })
 		},
 		onPageScroll(e){
 			return;
@@ -165,12 +186,26 @@
 				this.list = [];
 				var that = this
 				const userid=getStore('user_id');
+				var order_type = 10
+				switch(tbIndex){
+					case '11':
+						order_type = 0;
+						break;
+					case '12':
+						order_type = 1;
+						break;
+					case '13':
+						order_type = 2;
+						break;
+					default:
+						order_type = 10;
+						break;
+				}
 				
-				request.get('/api/order/get/'+userid+'/'+tbIndex).then(function(res) {
+				request.get('/api/order/get/'+userid+'/'+order_type).then(function(res) {
 					let data = res.data;
 					for(let i=0;i<data.length;i++){
 						data[i]['goods']['cover'] = baseUrl+data[i]['goods']['cover']
-						
 					}
 					 that.list=data
 				}, function(error) {
@@ -218,6 +253,11 @@
 						}
 					})
 				},500)
+			},
+			toComment(id){
+				uni.navigateTo({
+					url:'../comment/comment?order_id='+id
+				})
 			}
 		}
 	}

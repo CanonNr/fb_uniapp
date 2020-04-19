@@ -70,12 +70,12 @@ import {
 					envelope:0
 				},
 				// 订单类型
-				orderList:[
-					
-					{text:'待发货',icon:"fahuo"},
-					{text:'待送达',icon:"shouhuo"},
-					{text:'已送达',icon:"pingjia"},
-				],
+				orderList:{
+					10:{text:'全部',icon:"fahuo"},
+					11:{text:'待发货',icon:"fahuo"},
+					12:{text:'待送达',icon:"shouhuo"},
+					13:{text:'已送达',icon:"pingjia"},
+				},
 				// 工具栏列表
 				mytoolbarList:[
 					{url:'../user/keep/keep',text:'我的收藏',img:'../../static/img/user/point.png'},
