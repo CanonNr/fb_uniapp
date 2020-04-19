@@ -1,7 +1,7 @@
 <template>
     <div class="box">
-        <textarea placeholder="请输入..." maxlength="120" @input="descInput" v-model="desc" class="mytextarea"/>
-         <span class="numberV">{{txtVal}}/120</span>
+        <textarea placeholder="请输入..." maxlength="120" @input="descInput" v-model="desc" class="mytextarea" />
+        <span class="numberV">{{txtVal}}/120</span>
 		<button type="primary" @tap="submit()">提 交</button>
 	</div>
 	
@@ -36,7 +36,18 @@
 				this.txtVal = this.desc.length;
 			},
 		submit(){
-			alert(this.order_id)
+			let desc = this.desc
+			let order_id = this.order_id
+			request.post('/api/order/comment',{
+				content:desc,
+				order_id:order_id
+			}).then(function(res) {
+				uni.navigateTo({
+					url:'../order_list/order_list',
+				});		 
+			}, function(error) {
+				console.log('error')
+			})
 		}
 
 		}

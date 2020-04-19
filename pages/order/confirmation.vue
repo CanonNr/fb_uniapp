@@ -226,7 +226,8 @@
 							'name':this.recinfo.name,
 							'tel':this.recinfo.tel,
 							'address':this.recinfo.address,
-							'order_name':order_name
+							'order_name':order_name,
+							'all_goods':goodsid.join("-")
 						},).then(function(res) {
 							console.log(res)
 							uni.hideLoading();
