@@ -41,13 +41,18 @@
 		data() {
 			return {
 				isSelect:false,
-				addressList:[
-					{id:1,name:"大黑哥",head:"大",tel:"18816881688","label":"广东省-深圳市-福田区",address:'深南大道1111号无名摩登大厦6楼A2',isDefault:true}
-					]
+				addressList:[],
+				toOrder:false
 			};
 		},
 		onShow() {
-			
+			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
 			uni.getStorage({
 				key:'delAddress',
 				success: (e) => {
@@ -92,6 +97,9 @@
 			if(e.type=='select'){
 				this.isSelect = true;
 			}
+			if(e.t=='order'){
+				this.toOrder = true;
+			}
 			const userid=getStore('user_id');
 			if(userid == 0){
 				uni.navigateTo({
@@ -127,19 +135,29 @@
 			},
 			add(){
 				uni.navigateTo({
-					url:"edit/edit?type=add"
+					url:"edit/edit?type=add&t=select"
 				})
 			},
 			select(row){
 				//是否需要返回地址(从订单确认页跳过来选收货地址)
+
 				if(!this.isSelect){
 					return ;
 				}
+				let that = this
 				uni.setStorage({
 					key:'selectAddress',
 					data:row,
 					success() {
-						uni.navigateBack();
+						console.log(that.toOrder)
+						if(that.toOrder){
+							uni.navigateTo({
+								url:"../../order/confirmation"
+							})
+						}else{
+							uni.navigateBack();
+						}
+						
 					}
 				})
 			}

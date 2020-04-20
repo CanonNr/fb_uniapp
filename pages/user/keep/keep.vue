@@ -137,6 +137,15 @@
 				console.log('error')
 			})
 		},
+		onShow() {
+			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
+		},
 		methods: {
 			toGoods(id){
 				uni.navigateTo({

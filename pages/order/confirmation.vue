@@ -174,11 +174,11 @@
 		},
 		onHide() {
 			//页面隐藏清除订单信息
-			this.clearOrder();
+			//this.clearOrder();
 		},
 		onBackPress() {
 			//页面后退时候，清除订单信息
-			this.clearOrder();
+			//this.clearOrder();
 		},
 		methods: {
 			clearOrder(){
@@ -203,6 +203,7 @@
 					uni.showToast({title:'订单信息有误，请重新购买',icon:'none'});
 					return ;
 				}
+				
 				if(this.recinfo == null){
 					uni.showToast({title:'请正确填写收货地址',icon:'none'});
 					return ;

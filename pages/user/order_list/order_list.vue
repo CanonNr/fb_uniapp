@@ -164,7 +164,13 @@
 			
 		},
 		onShow() {
-			const userid=getStore('userid');
+			const userid=getStore('user_id');
+			if(userid == 0){
+				uni.navigateTo({
+					url:'../../login/login'
+				})
+				return
+			}
 			//option.cid=1;
 			var that = this
 			//var contactmsg = 

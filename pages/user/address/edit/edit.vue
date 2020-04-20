@@ -70,6 +70,7 @@
 		},
 		data() {
 			return {
+				isSelect:false,
 				editType:'edit',
 				id:'',
 				name:'',
@@ -80,6 +81,11 @@
 				themeColor: '#007AFF',
 				region:{label:"请点击选择地址",value:[],cityCode:""}
 			};
+		},
+		onShow(e) {
+			if(this.$route.query.t=='select'){
+				this.isSelect = true;
+			}
 		},
 		methods: {
 			onCancel(e) {
@@ -141,7 +147,7 @@
 				// })
 				
 				console.log(data)
-	
+					let that = this
 					const userid=getStore('user_id');
 					// const userPhone=getStore('userPhone');
 					request.get('/api/address/add',{
@@ -154,8 +160,12 @@
 						'user_id':userid,
 						}).then(function(res) {
 						//
+						let url = '../address';
+						if(that.isSelect){
+							url = url + '?type=select&t=order'
+						}
 				 		uni.navigateTo({
-				 			url: '../address'
+				 			url: url
 							
 				 		});
 					}, function(error) {
