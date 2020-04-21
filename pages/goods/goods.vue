@@ -147,7 +147,7 @@
 				<view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view>
 				<view class="arrow"><view class="icon xiangyou"></view></view>
 			</view>
-			<view class="row" @tap="showSpec(false)">
+			<!-- <view class="row" @tap="showSpec(false)">
 				<view class="text">选择</view>
 				<view class="content">
 					<view>选择规格：</view>
@@ -157,7 +157,7 @@
 					
 				</view>
 				<view class="arrow"><view class="icon xiangyou"></view></view>
-			</view>
+			</view> -->
 		</view>
 		<!--评价 -->
 		<view class="info-box comments" id="comments">
@@ -209,7 +209,7 @@ export default {
 			// #endif
 			//轮播主图数据
 			swiperList: [
-				{ id: 1, img: 'https://s2.ax1x.com/2019/03/28/AdOfUJ.jpg' },
+				// { id: 1, img: 'https://s2.ax1x.com/2019/03/28/AdOfUJ.jpg' },
 			
 			],
 			//轮播图下标
@@ -221,22 +221,22 @@ export default {
 			shareClass:'',//分享弹窗css类，控制开关动画
 			// 商品信息
 			goodsData:{
-				id:1,
-				name:"12312商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
-				price:"127.00",
-				number:1,
+				// id:1,
+				// name:"12312商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题",
+				// price:"127.00",
+				// number:1,
 				service:[
 					{name:"好吃急速送到家",description:"好吃急速送到家"},
-					// {name:"极速退款",description:"此商品享受退货极速退款服务"},
-					// {name:"7天退换",description:"此商品享受7天无理由退换服务"}
+					{name:"极速退款",description:"此商品享受退货极速退款服务"},
+					{name:"7天退换",description:"此商品享受7天无理由退换服务"}
 				],
-				spec:["小份","中份","大份"],
+				// spec:["小份","中份","大份"],
 			},
 			conment:[],
 			selectSpec:null,//选中规格
 			isKeep:false,//收藏
-			//商品描述html
-			descriptionStr:'<div style="text-align:center;"><img width="100%" src="https://s2.ax1x.com/2019/03/28/AdOogx.jpg"/><img width="100%" src="https://s2.ax1x.com/2019/03/28/AdOHKK.jpg"/><img width="100%" src="https://s2.ax1x.com/2019/03/28/AdOTv6.jpg"/></div>'
+			//商品描述html 
+			descriptionStr:''
 		};
 	},
 	onLoad(option) {
@@ -251,6 +251,12 @@ export default {
 				id:1,
 				img:baseUrl+res.data.cover
 			}
+			that.descriptionStr  = '<div style="text-align:center;">';
+			that.descriptionStr += '<img width="100%" src="'+baseUrl+res.data.cover+'"/>'
+			that.descriptionStr += '<img width="100%" src="../../static/img/t1.jpg"/>'
+			that.descriptionStr += '<img width="100%" src="../../static/img/t2.jpg"/>'
+			that.descriptionStr += '<img width="100%" src="../../static/img/t3.jpg"/>'
+			that.descriptionStr += '</div>';
 		}, function(error) {
 			console.log('error')
 		})

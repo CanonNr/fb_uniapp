@@ -7,7 +7,7 @@
  * verifyType:认证类型,用来返回认证项
  * urltoken 渠道token
  */
-let baseUrl = 'http://192.168.2.222:888';
+let baseUrl = 'http://127.0.0.1:12345';
 
 /* 
 let this_login_type = 2;

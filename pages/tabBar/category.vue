@@ -62,10 +62,10 @@
 				searchname:'',
 				//分类列表
 				categoryList:[
-					{id:1,title:'主食',banner:'../../static/img/category/banner.jpg',list:[]},
-					{id:2,title:'酒水',banner:'../../static/img/category/banner.jpg',list:[]},
-					{id:3,title:'盖浇饭',banner:'../../static/img/category/banner.jpg',list:[]},
-					{id:4,title:'菜',banner:'../../static/img/category/banner.jpg',list:[]}
+					{id:1,title:'主食',banner:'../../static/img/title.jpg',list:[]},
+					{id:2,title:'酒水',banner:'../../static/img/title.jpg',list:[]},
+					{id:3,title:'盖浇饭',banner:'../../static/img/title.jpg',list:[]},
+					{id:4,title:'菜',banner:'../../static/img/title.jpg',list:[]}
 				]
 			}
 		},

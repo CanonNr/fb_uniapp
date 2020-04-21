@@ -57,7 +57,7 @@
 			</view>
 		</view>
 		<!-- 广告图 -->
-		<view class="banner"><image src="../../static/img/banner.jpg"></image></view>
+		<view class="banner"><image src="../../static/img/title.jpg"></image></view>
 		<!-- 活动区 -->
 		<view class="promotion">
 			<view class="text">折扣美食</view>
