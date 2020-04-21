@@ -141,12 +141,12 @@
 			
 		</view>
 		<!-- 服务-规则选择 -->
-		<view class="info-box spec">
-			<view class="row" @tap="showService">
+		<!-- <view class="info-box spec"> -->
+			<!-- <view class="row" @tap="showService">
 				<view class="text">服务</view>
 				<view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view>
 				<view class="arrow"><view class="icon xiangyou"></view></view>
-			</view>
+			</view> -->
 			<!-- <view class="row" @tap="showSpec(false)">
 				<view class="text">选择</view>
 				<view class="content">
@@ -158,7 +158,7 @@
 				</view>
 				<view class="arrow"><view class="icon xiangyou"></view></view>
 			</view> -->
-		</view>
+		<!-- </view> -->
 		<!--评价 -->
 		<view class="info-box comments" id="comments">
 			<view class="row">
