@@ -253,9 +253,6 @@ export default {
 			}
 			that.descriptionStr  = '<div style="text-align:center;">';
 			that.descriptionStr += '<img width="100%" src="'+baseUrl+res.data.cover+'"/>'
-			that.descriptionStr += '<img width="100%" src="../../static/img/t1.jpg"/>'
-			that.descriptionStr += '<img width="100%" src="../../static/img/t2.jpg"/>'
-			that.descriptionStr += '<img width="100%" src="../../static/img/t3.jpg"/>'
 			that.descriptionStr += '</div>';
 		}, function(error) {
 			console.log('error')

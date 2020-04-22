@@ -77,7 +77,8 @@
         },
         "uniStatistics" : {
             "enable" : false
-        }
+        },
+        "domain" : "123123"
     },
     "mp-baidu" : {
         "uniStatistics" : {

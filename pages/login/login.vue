@@ -89,33 +89,27 @@
 				//模板示例比对本地储存的用户信息，实际使用中请替换为上传服务器比对。
 				setTimeout(()=>{
 						
-				request.get('/api/login',{'username':this.username,'password':this.password}).then(function(res) {
+					request.get('/api/login',{'username':this.username,'password':this.password}).then(function(res) {
+						uni.hideLoading()
+						if(res.code == 200){
+							alert(1123)
+							uni.showToast({title: '登录成功',icon:"success"});
+							setStore('user_id', res.data.id);
+							setStore('username', res.data.username);
+							setStore('password', res.data.password);
+							setStore('token', res.data.token);
+							uni.switchTab({
+								url:"../tabBar/category"
+							})
+						}else{
+							uni.showToast({title: '账号或密码不正确',icon:"none"});
+						}
 
-					uni.hideLoading()
-					if(res.code = 200){
-
-						uni.showToast({title: '登录成功',icon:"success"});
-						setStore('user_id', res.data.id);
-						setStore('username', res.data.username);
-						setStore('password', res.data.password);
-						setStore('token', res.data.token);
-						
-						uni.switchTab({
-							url:"../tabBar/category"
-						})
-
-					}else{
-						uni.showToast({title: '账号或密码不正确',icon:"none"});
-					}
-
-				
-					
-			
-					uni.hideLoading();
-			// 		uni.navigateBack();
-				}, function(error) {
-					console.log('error')
-				})
+						uni.hideLoading();
+				// 		uni.navigateBack();
+					}, function(error) {
+						console.log('error')
+					})
 					
 					
 					// let md5PW = md5(this.passwd)
