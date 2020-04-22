@@ -38,7 +38,7 @@
 				goodsList:[
 					
 				],
-				loadingText:"正在加载...",
+				loadingText:"",
 				headerTop:"0px",
 				headerPosition:"fixed",
 				orderbyList:[
