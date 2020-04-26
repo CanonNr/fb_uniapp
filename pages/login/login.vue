@@ -92,7 +92,6 @@
 					request.get('/api/login',{'username':this.username,'password':this.password}).then(function(res) {
 						uni.hideLoading()
 						if(res.code == 200){
-							alert(1123)
 							uni.showToast({title: '登录成功',icon:"success"});
 							setStore('user_id', res.data.id);
 							setStore('username', res.data.username);
